@@ -95,7 +95,7 @@ namespace WawaSoft.Search.Common
                         k++;
 
                 }
-                if (k == _coordCount)
+                if (k+3 >= _coordCount)
                     break;
 
                 //5、否则需要重新调整资料点和群聚类的关系，调整完毕后再重新开始循环；

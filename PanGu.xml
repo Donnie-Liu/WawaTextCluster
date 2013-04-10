@@ -14,7 +14,7 @@
     <UnknownWordIdentify>true</UnknownWordIdentify>
     <FilterEnglish>false</FilterEnglish>
     <FilterNumeric>true</FilterNumeric>
-    <IgnoreCapital>false</IgnoreCapital>
+    <IgnoreCapital>true</IgnoreCapital>
     <EnglishSegment>true</EnglishSegment>
     <SynonymOutput>false</SynonymOutput>
     <WildcardOutput>false</WildcardOutput>

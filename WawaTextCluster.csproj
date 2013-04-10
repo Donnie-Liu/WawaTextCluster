@@ -71,8 +71,6 @@
     <Content Include="Dictionaries\Wildcard.txt" />
     <Content Include="input.txt" />
     <Content Include="input2.txt" />
-    <Content Include="PanGu.xml" />
-    <Content Include="test.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dictionaries\Dict.dct" />

@@ -22,7 +22,7 @@ namespace WawaSoft.Search.Test
             //2、初始化TFIDF测量器，用来生产每个文档的TFIDF权重
             TFIDFMeasure tf = new TFIDFMeasure(docs, new Tokeniser());
 
-            int K = 5; //聚成3个聚类
+            int K = 1; //聚成3个聚类
 
             //3、生成k-means的输入数据，是一个联合数组，第一维表示文档个数，
             //第二维表示所有文档分出来的所有词
@@ -50,7 +50,7 @@ namespace WawaSoft.Search.Test
                 List<int> members = cluster.CurrentMembership;
 
                 //获取该聚类的关键词并打印
-                IEnumerable<string> keywords = tf.GetKeyword(cluster.CurrentMembership, 1);
+                IEnumerable<string> keywords = tf.GetKeyword(cluster.CurrentMembership, 10);
                 StringBuilder sbTemp = new StringBuilder();
                 sbTemp.Append("---------");
                 foreach (string s in keywords)
@@ -61,12 +61,12 @@ namespace WawaSoft.Search.Test
                 Console.WriteLine(sbTemp);
 
                 //打印该聚类的成员
-                sb.Append(sbTemp.ToString());
-                foreach (int i in members)
-                {
-                    Console.WriteLine(docs[i]);
-                    sb.AppendFormat("{0}\r\n", docs[i]);
-                }
+                //sb.Append(sbTemp.ToString());
+                //foreach (int i in members)
+                //{
+                //    Console.WriteLine(docs[i]);
+                //    sb.AppendFormat("{0}\r\n", docs[i]);
+                //}
             }
             Console.Read();
         }
