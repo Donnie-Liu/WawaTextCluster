@@ -118,6 +118,7 @@ namespace WawaSoft.Search.Common
 			{								
 				string curDoc=_docs[i];
 				IDictionary freq=GetWordFrequency(curDoc);
+                
 				IDictionaryEnumerator enums=freq.GetEnumerator() ;
 				_maxTermFreq[i]=int.MinValue ;
 				while (enums.MoveNext())
@@ -337,7 +338,27 @@ namespace WawaSoft.Search.Common
             return sortByValueDict;
         }
 
+        public void OutputTermFreqDirectly(string input, int n)
+        {
+            IDictionary d1 = GetWordFrequency(input);
+            Dictionary<string,int> all = new Dictionary<string,int>(d1.Count);
+            string[] words = new string[d1.Count];
+            d1.Keys.CopyTo(words,0);
+            foreach (String word in words)
+            {
+                all.Add(word, (int)d1[word]);
+                    
+            }
+            Dictionary<string, int> dict = GetSortByValueDict(all);
+            IDictionaryEnumerator pointer = dict.GetEnumerator();
+            for (int i = 0; i < n; i++)
+            {
+                pointer.MoveNext();
+                Console.WriteLine(pointer.Key+": "+pointer.Value);
+            }
 
+
+        }
         /// <summary>
         /// °ÑÒ»¸ö×Öµä°³valueµÄË³ÐòÅÅÐò
         /// </summary>
@@ -390,6 +411,9 @@ namespace WawaSoft.Search.Common
                 return result;
             }
         }
+
+
+        
 
 	}
 }

@@ -63,17 +63,8 @@
     <Compile Include="WawaKMeans.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dictionaries\ChsDoubleName1.txt" />
-    <Content Include="Dictionaries\ChsDoubleName2.txt" />
-    <Content Include="Dictionaries\ChsSingleName.txt" />
-    <Content Include="Dictionaries\Stopword.txt" />
-    <Content Include="Dictionaries\Synonym.txt" />
-    <Content Include="Dictionaries\Wildcard.txt" />
     <Content Include="input.txt" />
     <Content Include="input2.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Dictionaries\Dict.dct" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
