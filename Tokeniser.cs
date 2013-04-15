@@ -68,6 +68,52 @@ namespace WawaSoft.Search.Common
             //return filter.ToArray();
 		}
 
+        /// <summary>
+        /// 匹配名词短语的模式，考虑组成名词短语的词性组合，
+        /// 只考虑连续三个词的组合,返回WordInfo类型的短语集合。
+        /// </summary>
+        /// <param name="words"></param>
+        /// <returns></returns>
+        public ICollection<WordInfo> PatternMatch(ICollection<WordInfo> words)
+        {
+            List<WordInfo> phrase = new List<WordInfo>();
+            IEnumerator<WordInfo> enums = words.GetEnumerator();
+            int i = 0;
+            WordInfo[] word = new WordInfo[3];
+            while (true)
+            {
+                
+                while (enums.MoveNext() && i < 3)
+                {
+                    word[i] = enums.Current;
+                    //如果词性是POS_UNK，包含了中文的未知词性和英文，则直接输出
+                    if((int)word[i].Pos ==0)
+                        phrase.Add(word[i]);
+                    else
+                        i++;
+
+                }
+                
+                if (i == 0) //刚好取完所有词，终止
+                    break;
+                else if(i==1)//正好只剩下一个词
+                {
+                    phrase.Add(word[0]);
+                    break;
+                }else if(i==2)//最后正好剩下两个词
+                {
+                    break;
+                }else if(i==3)//正好取得三个词
+                {
+                    
+                }
+  
+            }
+
+            return phrase;
+             
+        }
+
 
 		public Tokeniser()
 		{
