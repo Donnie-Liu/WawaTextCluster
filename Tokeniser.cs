@@ -40,11 +40,16 @@ namespace WawaSoft.Search.Common
             Segment segment = new Segment();
             ICollection<WordInfo> words = segment.DoSegment(input.ToLower());
 
+            
+
             List<string> filter = new List<string>();
 
             foreach (WordInfo word in words)
             {
-                filter.Add(word.Word);
+                
+                Int32 x=(Int32)word.Pos | 0x419090f8;
+                if(x == 0x419090f8)
+                    filter.Add(word.Word);
             }
 
             return filter.ToArray();

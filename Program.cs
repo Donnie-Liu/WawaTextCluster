@@ -26,7 +26,7 @@ namespace WawaSoft.Search.Test
             {
                 txt += docs[i];
             }
-            tf.OutputTermFreqDirectly(txt,4);
+            tf.OutputTermFreqDirectly(txt,10);
             //int K = 2; //聚成3个聚类
 
             ////3、生成k-means的输入数据，是一个联合数组，第一维表示文档个数，
