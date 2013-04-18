@@ -4,8 +4,8 @@
    <MatchOptions>
     <ChineseNameIdentify>true</ChineseNameIdentify>
     <FrequencyFirst>true</FrequencyFirst>
-    <MultiDimensionality>false</MultiDimensionality>
-    <EnglishMultiDimensionality>true</EnglishMultiDimensionality>
+    <MultiDimensionality>true</MultiDimensionality>
+    <EnglishMultiDimensionality>false</EnglishMultiDimensionality>
     <FilterStopWords>true</FilterStopWords>
     <IgnoreSpace>true</IgnoreSpace>
     <ForceSingleWord>false</ForceSingleWord>
@@ -15,7 +15,7 @@
     <FilterEnglish>false</FilterEnglish>
     <FilterNumeric>true</FilterNumeric>
     <IgnoreCapital>true</IgnoreCapital>
-    <EnglishSegment>true</EnglishSegment>
+    <EnglishSegment>false</EnglishSegment>
     <SynonymOutput>false</SynonymOutput>
     <WildcardOutput>false</WildcardOutput>
     <WildcardSegment>false</WildcardSegment>

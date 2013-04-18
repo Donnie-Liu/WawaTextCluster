@@ -21,12 +21,12 @@ using Lucene.Net.Search;
 
 namespace WawaSoft.Search.Common
 {
-	/// <summary>
-	/// Summary description for Tokeniser.
-	/// Partition string into SUBwords
-	/// </summary>
-	internal class Tokeniser : ITokeniser
-	{
+    /// <summary>
+    /// Summary description for Tokeniser.
+    /// Partition string into SUBwords
+    /// </summary>
+    internal class Tokeniser : ITokeniser
+    {
 
         /// <summary>
         /// 以空白字符进行简单分词，并忽略大小写，
@@ -34,21 +34,24 @@ namespace WawaSoft.Search.Common
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-		public IList<string> Partition(string input)
-		{
+        public IList<string> Partition(string input)
+        {
             PanGu.Segment.Init();
             Segment segment = new Segment();
-            ICollection<WordInfo> words = segment.DoSegment(input.ToLower());
+            ICollection<WordInfo> words1 = segment.DoSegment(input.ToLower());
 
-            
+            ICollection<WordInfo> words = PatternMatch(words1);
+
 
             List<string> filter = new List<string>();
 
             foreach (WordInfo word in words)
             {
-                
-                Int32 x=(Int32)word.Pos | 0x419090f8;
-                if(x == 0x419090f8)
+
+                //Int32 x = (Int32)word.Pos | 0x419090f8;
+                //if (x == 0x419090f8)
+                int i = word.Word.Length;
+                if(i>=2)
                     filter.Add(word.Word);
             }
 
@@ -71,7 +74,7 @@ namespace WawaSoft.Search.Common
             //}
 
             //return filter.ToArray();
-		}
+        }
 
         /// <summary>
         /// 匹配名词短语的模式，考虑组成名词短语的词性组合，
@@ -83,46 +86,65 @@ namespace WawaSoft.Search.Common
         {
             List<WordInfo> phrase = new List<WordInfo>();
             IEnumerator<WordInfo> enums = words.GetEnumerator();
-            int i = 0;
-            WordInfo[] word = new WordInfo[3];
-            while (true)
+            Stack<WordInfo> s = new Stack<WordInfo>();
+            s.Clear();
+            while (enums.MoveNext())
             {
-                
-                while (enums.MoveNext() && i < 3)
+                WordInfo temp = enums.Current;
+                Int32 x = (Int32)temp.Pos;
+                switch (x)
                 {
-                    word[i] = enums.Current;
-                    //如果词性是POS_UNK，包含了中文的未知词性和英文，则直接输出
-                    if((int)word[i].Pos ==0)
-                        phrase.Add(word[i]);
-                    else
-                        i++;
+                    case 0:
+                    case 8:
+                    case 16:
+                    case 32:
+                    case 64:
+                    case 128:
+                    case 8388608:
+                    case 16777216:  //专有名词，外文词，未知词性直接加入
+                        if (s.Count == 1)
+                        {
+                            phrase.Add(s.Pop());
+                        }
+                        phrase.Add(temp);
+                        s.Clear();
+                        break;
+                    case 4096:
+                    case 1048576:
+                    case 1073741824://名词、动词、形容词
+                        if (s.Count == 1)
+                        {
+                            WordInfo t = s.Pop();
+                            if (t.Pos.Equals(POS.POS_D_A) && temp.Pos.Equals(POS.POS_D_A))//两个都是形容词
+                            {
+                                s.Clear();
+                                s.Push(temp);
+                            }
+                            else
+                            {   //把两个词连接起来
+                                //t.Pos = POS.POS_D_N;
+                                t.Word += temp.Word;
+                                phrase.Add(t);
+                            }
+                        }
+                        else
+                        {
+                            s.Push(temp);
+                        }
+                    break;
 
                 }
-                
-                if (i == 0) //刚好取完所有词，终止
-                    break;
-                else if(i==1)//正好只剩下一个词
-                {
-                    phrase.Add(word[0]);
-                    break;
-                }else if(i==2)//最后正好剩下两个词
-                {
-                    break;
-                }else if(i==3)//正好取得三个词
-                {
-                    
-                }
-  
             }
+            
 
             return phrase;
              
         }
 
 
-		public Tokeniser()
-		{
-		}
+        public Tokeniser()
+        {
+        }
 
     }
 }

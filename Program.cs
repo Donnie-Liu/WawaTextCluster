@@ -11,7 +11,7 @@ namespace WawaSoft.Search.Test
         static void Main(string[] args)
         {
             //1、获取文档输入
-            string[] docs = getInputDocs("test.txt");
+            string[] docs = getInputDocs("test5.txt");
             if (docs.Length < 1)
             {
                 Console.WriteLine("没有文档输入");
